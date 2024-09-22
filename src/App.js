@@ -1,24 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
+import QnaList from "./components/QnaList";
+import Notices from "./components/NoticeList";
+import MemberList from "./components/Account";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Login from "./components/Login";
+import axios from "axios";
+import NoticeInsert from "./components/NoticeInsert";
+import NoticeDetail from "./components/NoticeDetail";
+import QnaDetail from "./components/QnaDetail";
 
 function App() {
+  const token = localStorage.getItem("token");
+  if (token) {
+    axios.defaults.headers.common["Authorization"] = `${token}`;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="app">
+        {token ? (
+          <>
+            <Header />
+            <div className="body row">
+              <Sidebar />
+              <main className="main-content col">
+                <Routes>
+                  <Route path="/account" element={<MemberList />} />
+                  <Route path="/notice/:postNo" element={<NoticeDetail />} />
+                  <Route path="/notice/insert" element={<NoticeInsert />} />
+                  <Route path="/notices" element={<Notices />} />
+                  <Route path="/qna" element={<QnaList />} />
+                  <Route path="/qna/:postNo" element={<QnaDetail />} />
+                  <Route path="*" element={<Navigate to="/account" />} />
+                </Routes>
+              </main>
+            </div>
+          </>
+        ) : (
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<Navigate to="/login" />} />
+          </Routes>
+        )}
+      </div>
+    </Router>
   );
 }
 
