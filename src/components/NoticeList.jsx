@@ -20,7 +20,7 @@ const NoticeList = () => {
   // 공지사항 목록 조회
   const callAPI = async () => {
     try {
-      const response = await axios.get("/api/notice", {
+      const response = await axios.get("/api/admin/notice", {
         params: {
           keyword: keyword,
           page: paging.page,

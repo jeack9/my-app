@@ -21,7 +21,7 @@ const QnaList = () => {
   // QnA 목록 조회 API 호출
   const callAPI = async () => {
     try {
-      const response = await axios.get("/api/qna", {
+      const response = await axios.get("/api/admin/qna", {
         params: {
           keyword: keyword,
           answerStatus: answerStatus, // 답변 상태 검색 조건 추가

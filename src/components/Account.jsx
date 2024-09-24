@@ -11,11 +11,11 @@ const MemberList = () => {
   const [selectedMembers, setSelectedMembers] = useState([]); // 선택한 멤버들의 ID 리스트
   const [selectAll, setSelectAll] = useState(false); // 전체 선택 여부
   const callAPI = async () => {
-    let url = "/api/memberList/1"; // 기본 URL
+    let url = "/api/admin/memberList/1"; // 기본 URL
     if (userType === "임대인") {
-      url = "/api/memberList/1";
+      url = "/api/admin/memberList/1";
     } else if (userType === "임차인") {
-      url = "/api/memberList/2";
+      url = "/api/admin/memberList/2";
     }
     const response = await axios.get(url);
     setMembers(response.data);
@@ -46,7 +46,7 @@ const MemberList = () => {
   // 선택된 멤버 삭제 핸들러
   const handleDeleteSelected = async () => {
     console.log("선택된 멤버 삭제: ", selectedMembers);
-    const response = await axios.delete("/api/membersRemove", {
+    const response = await axios.delete("/api/admin/membersRemove", {
       loginId: selectedMembers,
     });
     console.log(response.data, "data");

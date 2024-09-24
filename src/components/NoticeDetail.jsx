@@ -12,7 +12,7 @@ const NoticeDetail = () => {
   // 공지사항 단건 조회 API 호출
   const callAPI = async () => {
     try {
-      const response = await axios.get(`/api/notice/${postNo}`);
+      const response = await axios.get(`/api/admin/notice/${postNo}`);
       setNotice(response.data);
       setIsLoading(false);
     } catch (error) {
@@ -37,7 +37,7 @@ const NoticeDetail = () => {
   const handleDelete = async () => {
     if (window.confirm("정말로 삭제하시겠습니까?")) {
       try {
-        await axios.delete(`/api/notice/${postNo}`);
+        await axios.delete(`/api/admin/notice/${postNo}`);
         alert("공지사항이 삭제되었습니다.");
         navigate("/notices");
       } catch (error) {
@@ -45,6 +45,8 @@ const NoticeDetail = () => {
       }
     }
   };
+  // 글 단건수정 핸들러
+  const handleUpdate = async () => {};
 
   if (!notice) {
     return (
@@ -70,7 +72,19 @@ const NoticeDetail = () => {
           <div className="mb-3 text-muted">
             작성자: {notice.writer} | 조회수: {notice.views}
           </div>
-          <p className="lead">{notice.content}</p>
+          <div>
+            {notice.noticeFiles.map((file, idx) => {
+              return (
+                <img
+                  key={file.fileId}
+                  src={`http://localhost:8099/images/${file.filePath}`}
+                  alt={file.fileId}
+                  style={{ maxWidth: "200px", height: "auto" }}
+                />
+              );
+            })}
+          </div>
+          <pre className="lead">{notice.content}</pre>
           <p className="text-end">
             수정일: {new Date(notice.modDate).toLocaleDateString()}
           </p>
@@ -93,7 +107,7 @@ const NoticeDetail = () => {
           <Button
             variant="primary"
             className="me-2"
-            onClick={() => navigate(`/notice/edit/${postNo}`)}
+            onClick={() => navigate(`/notice/insert/${postNo}`)}
           >
             수정하기
           </Button>

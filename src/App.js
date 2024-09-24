@@ -34,7 +34,11 @@ function App() {
                 <Routes>
                   <Route path="/account" element={<MemberList />} />
                   <Route path="/notice/:postNo" element={<NoticeDetail />} />
-                  <Route path="/notice/insert" element={<NoticeInsert />} />
+                  <Route
+                    path="/notice/insert/:postNo?"
+                    element={<NoticeInsert />}
+                  />
+                  {/* <Route path="/notice/insert" element={<NoticeInsert />} /> */}
                   <Route path="/notices" element={<Notices />} />
                   <Route path="/qna" element={<QnaList />} />
                   <Route path="/qna/:postNo" element={<QnaDetail />} />

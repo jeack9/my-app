@@ -15,7 +15,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8099/api/login", {
+      const response = await axios.post("/api/admin/login", {
         loginId: inputId,
         pw: inputPw,
       });
@@ -23,16 +23,16 @@ const Login = () => {
       const token = response.headers["authorization"];
       if (token) {
         // JWT를 로컬 스토리지에 저장
+        //alert("token: " + token);
         localStorage.setItem("token", token);
-        console.log("토큰 저장 완료, 페이지 이동 시도");
+        console.log("토큰 저장 완료");
 
         // 로그인 성공 시 즉시 페이지 이동
         window.location.href = "/account";
       } else {
-        alert("로그인 실패");
+        alert("관리자 로그인 실패");
       }
     } catch (error) {
-      console.error("로그인 중 오류:", error);
       localStorage.removeItem("token");
       alert("로그인 실패. 다시 로그인해주세요.");
     }

@@ -11,7 +11,7 @@ const QnaDetail = ({ postNo }) => {
   useEffect(() => {
     const fetchQna = async () => {
       try {
-        const response = await axios.get(`/api/qna/${postNo}`);
+        const response = await axios.get(`/api/admin/qna/${postNo}`);
         setQna(response.data.qna);
         setComments(response.data.comments);
         setLoading(false);
@@ -30,7 +30,7 @@ const QnaDetail = ({ postNo }) => {
       return;
     }
     try {
-      const response = await axios.post(`/api/qna/${postNo}/comment`, {
+      const response = await axios.post(`/api/admin/qna/${postNo}/comment`, {
         content: newComment,
       });
       setComments([...comments, response.data]);
@@ -43,7 +43,7 @@ const QnaDetail = ({ postNo }) => {
   // 댓글 삭제 핸들러
   const handleDeleteComment = async (commentId) => {
     try {
-      await axios.delete(`/api/qna/${postNo}/comment/${commentId}`);
+      await axios.delete(`/api/admin/qna/${postNo}/comment/${commentId}`);
       setComments(comments.filter((comment) => comment.id !== commentId));
     } catch (error) {
       console.error("댓글 삭제 실패:", error);
