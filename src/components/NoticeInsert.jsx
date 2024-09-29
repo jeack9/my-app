@@ -98,7 +98,7 @@ const NoticeInsert = () => {
   }, []);
 
   // 로딩 스피너
-  if (isLoading) {
+  if (isLoading && isEditMode) {
     return (
       <Spinner animation="border" role="status">
         <span className="visually-hidden">Loading...</span>

@@ -8,7 +8,7 @@ const MemberList = () => {
   const [members, setMembers] = useState([]);
   // 멤버 필터 (전체, 임대인, 임차인)
   const [userType, setUserType] = useState("임대인");
-  const [selectedMembers, setSelectedMembers] = useState([]); // 선택한 멤버들의 ID 리스트
+  const [selectedMembers, setSelectedMembers] = useState([]); // 선택한 멤버들
   const [selectAll, setSelectAll] = useState(false); // 전체 선택 여부
   const callAPI = async () => {
     let url = "/api/admin/memberList/1"; // 기본 URL

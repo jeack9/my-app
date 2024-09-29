@@ -77,7 +77,7 @@ const NoticeDetail = () => {
               return (
                 <img
                   key={file.fileId}
-                  src={`http://localhost:8099/images/${file.filePath}`}
+                  src={`http://localhost:80/images/${file.filePath}`}
                   alt={file.fileId}
                   style={{ maxWidth: "200px", height: "auto" }}
                 />
