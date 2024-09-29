@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import axios from "axios";
 
 // 로그인
 const Login = () => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
-  const navigate = useNavigate();
 
   const handleInputId = (e) => setInputId(e.target.value);
   const handleInputPw = (e) => setInputPw(e.target.value);
@@ -39,10 +37,10 @@ const Login = () => {
   };
 
   return (
-    <div className="container-xxl position-relative bg-white d-flex p-0">
+    <div className="container-xxl position-relative d-flex p-0 bg-dark">
       <div className="container-fluid">
-        <div className="row h-100 align-items-center justify-content-center">
-          <div className="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4 login-container">
+        <div className="row min-vh-100 align-items-center justify-content-center">
+          <div className="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4 login-container border p-5 bg-light">
             <h2>관리자 로그인</h2>
             <form onSubmit={handleSubmit}>
               <div className="form-floating mb-3">

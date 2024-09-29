@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Spinner, Card, Button, Container, Row, Col } from "react-bootstrap";
@@ -45,8 +45,6 @@ const NoticeDetail = () => {
       }
     }
   };
-  // 글 단건수정 핸들러
-  const handleUpdate = async () => {};
 
   if (!notice) {
     return (
@@ -60,16 +58,16 @@ const NoticeDetail = () => {
   }
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 mb-5">
       <h1>공지사항 세부 정보</h1>
 
       {/* 공지사항 상세 내용 */}
       <Card>
         <Card.Header className="d-flex justify-content-between align-items-center">
-          <h2>{notice.title}</h2>
+          <p className="m-0 fw-bold fs-4">{notice.title}</p>
         </Card.Header>
         <Card.Body>
-          <div className="mb-3 text-muted">
+          <div className="pb-3 mb-2 text-muted border-bottom">
             작성자: {notice.writer} | 조회수: {notice.views}
           </div>
           <div>
@@ -78,8 +76,8 @@ const NoticeDetail = () => {
                 <img
                   key={file.fileId}
                   src={`http://localhost:80/images/${file.filePath}`}
-                  alt={file.fileId}
-                  style={{ maxWidth: "200px", height: "auto" }}
+                  alt="로딩 중"
+                  className="img-fluid pe-5 pb-3"
                 />
               );
             })}

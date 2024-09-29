@@ -9,7 +9,7 @@ import Header from "./components/Header";
 import QnaList from "./components/QnaList";
 import Notices from "./components/NoticeList";
 import MemberList from "./components/Account";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.css";
 import Login from "./components/Login";
 import axios from "axios";
 import NoticeInsert from "./components/NoticeInsert";

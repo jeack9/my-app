@@ -60,7 +60,7 @@ const NoticeList = () => {
   };
 
   return (
-    <div>
+    <div className="container mt-4">
       <h1>공지사항 목록</h1>
       {/* 검색 입력 필드 */}
       <input

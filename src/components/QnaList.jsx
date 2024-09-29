@@ -5,33 +5,22 @@ import { useNavigate } from "react-router-dom";
 const QnaList = () => {
   const navigate = useNavigate();
   const [qnaList, setQnaList] = useState([]); // QnA 목록
-  const [keyword, setKeyword] = useState(""); // 검색어
-  const [answerStatus, setAnswerStatus] = useState(""); // 답변 상태
-  const [paging, setPaging] = useState({
+  const [search, setSearch] = useState({
+    // 검색조건
+    keyword: "",
+    answerState: null,
     page: 1,
-    startPage: 1,
-    endPage: 1,
-    realEnd: 1,
-    prev: false,
-    next: false,
-  }); // 페이징 정보
-
-  const recordSize = 5; // 페이지당 출력할 레코드 수
+    recordSize: 5,
+  });
+  const [paging, setPaging] = useState({}); // 페이징 정보
 
   // QnA 목록 조회 API 호출
   const callAPI = async () => {
     try {
-      const response = await axios.get("/api/admin/qna", {
-        params: {
-          keyword: keyword,
-          answerStatus: answerStatus, // 답변 상태 검색 조건 추가
-          page: paging.page,
-          recordSize: recordSize,
-        },
-      });
-
+      const response = await axios.get("/api/admin/qna", { params: search });
       setQnaList(response.data.qnaList); // QnA 목록
       setPaging(response.data.paging); // 페이징 정보
+      // setSearch(response.data.search); // 검색조건
     } catch (error) {
       console.error("QnA 목록 조회 중 오류 발생:", error);
     }
@@ -40,22 +29,22 @@ const QnaList = () => {
   // 페이지나 검색 조건이 변경될 때마다 재호출
   useEffect(() => {
     callAPI();
-  }, [paging.page, keyword, answerStatus]);
+  }, [search.keyword, search.answerState, search.page]);
 
   // 검색어 입력 핸들러
   const handleSearchChange = (event) => {
-    setKeyword(event.target.value);
+    setSearch({ ...search, keyword: event.target.value });
   };
 
   // 답변 상태 선택 핸들러
   const handleAnswerStatusChange = (event) => {
-    setAnswerStatus(event.target.value);
+    setSearch({ ...search, answerState: event.target.value });
   };
 
   // 페이지 변경 핸들러
   const changePage = (newPage) => {
     if (newPage < 1 || newPage > paging.realEnd) return;
-    setPaging((prevState) => ({
+    setSearch((prevState) => ({
       ...prevState,
       page: newPage,
     }));
@@ -72,23 +61,22 @@ const QnaList = () => {
 
       {/* 검색 입력 필드 */}
       <div className="d-flex justify-content-between mb-3">
-        <input
-          type="text"
-          className="form-control"
-          value={keyword}
-          onChange={handleSearchChange}
-          placeholder="검색어 입력 (제목/내용)"
-        />
         {/* 답변 상태 선택 */}
         <select
           className="form-select ms-2"
-          value={answerStatus}
           onChange={handleAnswerStatusChange}
         >
-          <option value="">전체</option>
-          <option value="대기">답변 대기</option>
-          <option value="완료">답변 완료</option>
+          <option value="-1">전체</option>
+          <option value="0">답변 대기</option>
+          <option value="1">답변 완료</option>
         </select>
+        <input
+          type="text"
+          className="form-control"
+          value={search.keyword}
+          onChange={handleSearchChange}
+          placeholder="검색어 입력 (제목/내용)"
+        />
       </div>
 
       {/* QnA 목록 테이블 */}
@@ -113,12 +101,16 @@ const QnaList = () => {
               <td>{qna.title}</td>
               <td>{qna.writer}</td>
               <td>{new Date(qna.regDate).toLocaleDateString()}</td>
-              <td>{qna.answerStatus}</td>
+              <td>{qna.answerState == 1 ? "답변 완료" : "답변 대기"}</td>
             </tr>
           ))}
         </tbody>
       </table>
-
+      {/* 데이터가 없을 때 메시지 */}
+      {(() => {
+        if (paging.total < 1)
+          return <p className="text-center">데이터가 없습니다.</p>;
+      })()}
       {/* 페이지네이션 */}
       <nav aria-label="Page navigation">
         <ul className="pagination justify-content-center mt-3">
