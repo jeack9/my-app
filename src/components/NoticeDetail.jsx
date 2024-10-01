@@ -39,7 +39,7 @@ const NoticeDetail = () => {
       try {
         await axios.delete(`/api/admin/notice/${postNo}`);
         alert("공지사항이 삭제되었습니다.");
-        navigate("/notices");
+        navigate("/admin/notices");
       } catch (error) {
         alert("삭제 중 오류가 발생했습니다.");
       }
@@ -50,7 +50,7 @@ const NoticeDetail = () => {
     return (
       <Container className="text-center mt-5">
         <h3>공지사항을 찾을 수 없습니다.</h3>
-        <Button variant="primary" onClick={() => navigate("/notices")}>
+        <Button variant="primary" onClick={() => navigate("/admin/notices")}>
           목록으로 돌아가기
         </Button>
       </Container>
@@ -83,30 +83,18 @@ const NoticeDetail = () => {
             })}
           </div>
           <pre className="lead">{notice.content}</pre>
-          <p className="text-end">
-            수정일: {new Date(notice.modDate).toLocaleDateString()}
-          </p>
-          <p className="text-end">
-            작성일: {new Date(notice.regDate).toLocaleDateString()}
-          </p>
+          <p className="text-end">수정일: {new Date(notice.modDate).toLocaleDateString()}</p>
+          <p className="text-end">작성일: {new Date(notice.regDate).toLocaleDateString()}</p>
         </Card.Body>
       </Card>
 
       {/* 하단 버튼들 */}
       <Row className="mt-3">
         <Col className="d-flex justify-content-end">
-          <Button
-            variant="secondary"
-            className="me-2"
-            onClick={() => navigate("/notices")}
-          >
+          <Button variant="secondary" className="me-2" onClick={() => navigate("/admin/notices")}>
             목록으로 돌아가기
           </Button>
-          <Button
-            variant="primary"
-            className="me-2"
-            onClick={() => navigate(`/notice/insert/${postNo}`)}
-          >
+          <Button variant="primary" className="me-2" onClick={() => navigate(`/admin/notice/insert/${postNo}`)}>
             수정하기
           </Button>
           <Button variant="danger" onClick={handleDelete}>

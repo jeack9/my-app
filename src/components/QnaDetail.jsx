@@ -99,17 +99,12 @@ const QnaDetail = () => {
         <div className="card-body">
           <div className="pb-3 mb-2 d-flex justify-content-between align-items-center border-bottom">
             <p className="align-middle text-muted m-0">
-              작성자: {qna.writer} | 작성일:{" "}
-              {new Date(qna.regDate).toLocaleDateString()}
+              작성자: {qna.writer} | 작성일: {new Date(qna.regDate).toLocaleDateString()}
             </p>
-            {qna.answerState === 0 ? (
-              <p className="m-0 bg-warning text-dark rounded-pill p-2">
-                답변대기
-              </p>
+            {qna.answerState == 0 ? (
+              <p className="m-0 bg-warning text-dark rounded-pill p-2">답변대기</p>
             ) : (
-              <p className="m-0 bg-success text-dark rounded-pill p-2">
-                답변완료
-              </p>
+              <p className="m-0 bg-success text-light rounded-pill p-2">답변완료</p>
             )}
           </div>
           {qna.qnaFiles.map((file) => (
@@ -121,12 +116,8 @@ const QnaDetail = () => {
             />
           ))}
           <pre className="lead">{qna.content}</pre>
-          <p className="text-end">
-            수정일: {new Date(qna.modDate).toLocaleDateString()}
-          </p>
-          <p className="text-end">
-            작성일: {new Date(qna.regDate).toLocaleDateString()}
-          </p>
+          <p className="text-end">수정일: {new Date(qna.modDate).toLocaleDateString()}</p>
+          <p className="text-end">작성일: {new Date(qna.regDate).toLocaleDateString()}</p>
         </div>
       </div>
 
@@ -146,7 +137,7 @@ const QnaDetail = () => {
                 {comment.state !== -1 && (
                   <div className="mb-3">
                     <small
-                      className="p-2 bg-danger text-white rounded-3 border border-2 del-pointer"
+                      className="p-2 bg-danger text-white rounded-3 border border-2 del-pointer btn"
                       onClick={() => {
                         if (window.confirm("정말로 댓글을 삭제하시겠습니까?")) {
                           handleDeleteComment(comment.cmtNo);
@@ -163,9 +154,7 @@ const QnaDetail = () => {
                     className="btn btn-link"
                     onClick={() => toggleReplyForm(comment.cmtNo)} // 대댓글 폼 토글
                   >
-                    {replyForms[comment.cmtNo]
-                      ? "대댓글 숨기기"
-                      : "대댓글 작성하기"}
+                    {replyForms[comment.cmtNo] ? "대댓글 숨기기" : "대댓글 작성하기"}
                   </button>
                 )}
               </div>
@@ -204,24 +193,17 @@ const QnaDetail = () => {
               {comment.childCmts && (
                 <div className="ms-3">
                   {comment.childCmts.map((childComment) => (
-                    <div
-                      key={childComment.cmtNo}
-                      className="list-group-item bg-light cmtBody"
-                    >
+                    <div key={childComment.cmtNo} className="list-group-item bg-light cmtBody">
                       <div className="d-flex w-100 justify-content-between">
-                        <h6 className="mb-1 writerBody">
-                          {childComment.writerId}
-                        </h6>
+                        <h6 className="mb-1 writerBody">{childComment.writerId}</h6>
                         <small>{childComment.timeAgo}</small>
                       </div>
                       <p className="mb-2 contentBody">{childComment.content}</p>
                       {childComment.state !== -1 && (
                         <small
-                          className="p-2 bg-danger text-white rounded-3 border border-2 del-pointer"
+                          className="p-2 bg-danger text-white rounded-3 border border-2 del-pointer btn"
                           onClick={() => {
-                            if (
-                              window.confirm("정말로 댓글을 삭제하시겠습니까")
-                            ) {
+                            if (window.confirm("정말로 댓글을 삭제하시겠습니까")) {
                               handleDeleteComment(childComment.cmtNo);
                             }
                           }}
@@ -246,43 +228,28 @@ const QnaDetail = () => {
             <li className={`page-item ${paging.prev ? "" : "disabled"}`}>
               <button
                 className="page-link"
-                onClick={() =>
-                  handlePageChange(paging.startPage - paging.viewPage)
-                }
+                onClick={() => handlePageChange(paging.startPage - paging.viewPage)}
                 disabled={!paging.prev}
               >
                 <span aria-hidden="true">&laquo;</span>
               </button>
             </li>
             {/* 페이지 번호 */}
-            {Array.from(
-              { length: paging.endPage - paging.startPage + 1 },
-              (_, index) => {
-                const pageNum = paging.startPage + index;
-                return (
-                  <li
-                    key={pageNum}
-                    className={`page-item ${
-                      paging.page === pageNum ? "active" : ""
-                    }`}
-                  >
-                    <button
-                      className="page-link"
-                      onClick={() => handlePageChange(pageNum)}
-                    >
-                      {pageNum}
-                    </button>
-                  </li>
-                );
-              }
-            )}
+            {Array.from({ length: paging.endPage - paging.startPage + 1 }, (_, index) => {
+              const pageNum = paging.startPage + index;
+              return (
+                <li key={pageNum} className={`page-item ${paging.page == pageNum ? "active" : ""}`}>
+                  <button className="page-link" onClick={() => handlePageChange(pageNum)}>
+                    {pageNum}
+                  </button>
+                </li>
+              );
+            })}
             {/* 다음 페이지 */}
             <li className={`page-item ${paging.next ? "" : "disabled"}`}>
               <button
                 className="page-link"
-                onClick={() =>
-                  handlePageChange(paging.startPage + paging.viewPage)
-                }
+                onClick={() => handlePageChange(paging.startPage + paging.viewPage)}
                 disabled={!paging.next}
               >
                 <span aria-hidden="true">&raquo;</span>
@@ -302,14 +269,12 @@ const QnaDetail = () => {
             <textarea
               className="form-control"
               rows="3"
+              id="content"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
             ></textarea>
           </div>
-          <button
-            className="btn btn-primary mt-2"
-            onClick={handleCommentSubmit}
-          >
+          <button className="btn btn-primary mt-2" onClick={handleCommentSubmit}>
             댓글 작성
           </button>
         </div>
@@ -319,7 +284,7 @@ const QnaDetail = () => {
       {/* 목록이동 */}
       <div className="mt-3 row">
         <div className="d-flex justify-content-end col">
-          <Link to={"/qna"}>
+          <Link to={"/admin/qna"}>
             <button type="button" className="me-2 btn btn-secondary">
               목록으로 돌아가기
             </button>

@@ -50,17 +50,13 @@ const NoticeInsert = () => {
     try {
       if (isEditMode) {
         // 수정
-        const result = await axios.put(
-          `/api/admin/notice/${postNo}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+        const result = await axios.put(`/api/admin/notice/${postNo}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
         alert("공지사항이 수정되었습니다.");
-        navigate(`/notice/${postNo}`);
+        navigate(`/admin/notice/${postNo}`);
       } else {
         // 등록
         const result = await axios.post("/api/admin/notice", formData, {
@@ -70,7 +66,7 @@ const NoticeInsert = () => {
         });
         const newPostNo = result.data.postNo;
         alert("공지사항이 등록되었습니다.");
-        navigate(`/notice/${newPostNo}`);
+        navigate(`/admin/notice/${newPostNo}`);
       }
     } catch (error) {
       console.error("공지사항 처리 중 오류 발생:", error);
@@ -149,15 +145,9 @@ const NoticeInsert = () => {
             <ul>
               {prevFiles.map((file) => (
                 <li key={file.fileId} className="d-flex align-items-center">
-                  <img
-                    src={`http://localhost:8099/images/${file.filePath}`}
-                    width={"100px"}
-                  />
+                  <img src={`http://localhost/images/${file.filePath}`} width={"100px"} />
                   {file.fileName}
-                  <Button
-                    variant="danger"
-                    onClick={() => handleFileDelete(file.fileId)}
-                  >
+                  <Button variant="danger" onClick={() => handleFileDelete(file.fileId)}>
                     삭제
                   </Button>
                 </li>
@@ -169,12 +159,7 @@ const NoticeInsert = () => {
         {/* 파일 첨부 */}
         <Form.Group controlId="file" className="mb-3">
           <Form.Label>파일 첨부</Form.Label>
-          <Form.Control
-            type="file"
-            multiple
-            onChange={handleFileChange}
-            accept=".jpg, .jpeg, .png"
-          />
+          <Form.Control type="file" multiple onChange={handleFileChange} accept=".jpg, .jpeg, .png" />
         </Form.Group>
         <Button variant="primary" type="submit">
           {isEditMode ? "수정하기" : "등록하기"}

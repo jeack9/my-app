@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 // 로그인
 const Login = () => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
+  const navigate = useNavigate();
 
   const handleInputId = (e) => setInputId(e.target.value);
   const handleInputPw = (e) => setInputPw(e.target.value);
@@ -26,7 +28,9 @@ const Login = () => {
         console.log("토큰 저장 완료");
 
         // 로그인 성공 시 즉시 페이지 이동
-        window.location.href = "/account";
+        // navigate("/admin/account");
+        // window.location.href = "/admin/account";
+        window.location.href = "/static/index.html";
       } else {
         alert("관리자 로그인 실패");
       }
@@ -37,7 +41,7 @@ const Login = () => {
   };
 
   return (
-    <div className="container-xxl position-relative d-flex p-0 bg-dark">
+    <div className="p-0 bg-dark">
       <div className="container-fluid">
         <div className="row min-vh-100 align-items-center justify-content-center">
           <div className="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4 login-container border p-5 bg-light">

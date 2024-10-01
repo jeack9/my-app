@@ -52,7 +52,7 @@ const QnaList = () => {
 
   // 글 단건조회 핸들러
   const goDetail = (postNo) => {
-    navigate(`/qna/${postNo}`); // 단건 조회 페이지로 이동
+    navigate(`/admin/qna/${postNo}`); // 단건 조회 페이지로 이동
   };
 
   return (
@@ -62,10 +62,7 @@ const QnaList = () => {
       {/* 검색 입력 필드 */}
       <div className="d-flex justify-content-between mb-3">
         {/* 답변 상태 선택 */}
-        <select
-          className="form-select ms-2"
-          onChange={handleAnswerStatusChange}
-        >
+        <select className="form-select me-2" onChange={handleAnswerStatusChange}>
           <option value="-1">전체</option>
           <option value="0">답변 대기</option>
           <option value="1">답변 완료</option>
@@ -92,11 +89,7 @@ const QnaList = () => {
         </thead>
         <tbody>
           {qnaList.map((qna) => (
-            <tr
-              key={qna.postNo}
-              onClick={() => goDetail(qna.postNo)}
-              style={{ cursor: "pointer" }}
-            >
+            <tr key={qna.postNo} onClick={() => goDetail(qna.postNo)} style={{ cursor: "pointer" }}>
               <td>{qna.postNo}</td>
               <td>{qna.title}</td>
               <td>{qna.writer}</td>
@@ -108,8 +101,7 @@ const QnaList = () => {
       </table>
       {/* 데이터가 없을 때 메시지 */}
       {(() => {
-        if (paging.total < 1)
-          return <p className="text-center">데이터가 없습니다.</p>;
+        if (paging.total < 1) return <p className="text-center">데이터가 없습니다.</p>;
       })()}
       {/* 페이지네이션 */}
       <nav aria-label="Page navigation">
@@ -127,24 +119,16 @@ const QnaList = () => {
           </li>
 
           {/* 페이지 번호 */}
-          {Array.from(
-            { length: paging.endPage - paging.startPage + 1 },
-            (_, i) => (
-              <li
-                key={i + paging.startPage}
-                className={`page-item ${
-                  paging.page === i + paging.startPage ? "active" : ""
-                }`}
-              >
-                <button
-                  className="page-link"
-                  onClick={() => changePage(i + paging.startPage)}
-                >
-                  {i + paging.startPage}
-                </button>
-              </li>
-            )
-          )}
+          {Array.from({ length: paging.endPage - paging.startPage + 1 }, (_, i) => (
+            <li
+              key={i + paging.startPage}
+              className={`page-item ${paging.page === i + paging.startPage ? "active" : ""}`}
+            >
+              <button className="page-link" onClick={() => changePage(i + paging.startPage)}>
+                {i + paging.startPage}
+              </button>
+            </li>
+          ))}
 
           {/* 다음 페이지 */}
           <li className={`page-item ${paging.next ? "" : "disabled"}`}>

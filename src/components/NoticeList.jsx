@@ -56,29 +56,17 @@ const NoticeList = () => {
 
   // 글 단건조회 핸들러
   const goDetail = (postNo) => {
-    navigate(`/notice/${postNo}`); // 단건 조회 페이지로 이동
+    navigate(`/admin/notice/${postNo}`); // 단건 조회 페이지로 이동
   };
 
   return (
     <div className="container mt-4">
-      <h1>공지사항 목록</h1>
+      <h1 className="pb-3">공지사항 목록</h1>
       {/* 검색 입력 필드 */}
-      <input
-        type="text"
-        value={keyword}
-        onChange={handleSearchChange}
-        placeholder="검색어 입력 (제목/내용)"
-      />
-      {/* 글등록 버튼 */}
-      <div className="mb-3">
-        <button
-          className="btn btn-primary"
-          onClick={() => navigate("/notice/insert")}
-        >
-          글등록
-        </button>
-      </div>
-
+      <input type="text" value={keyword} onChange={handleSearchChange} placeholder="검색어 입력 (제목/내용)" />
+      <button className="btn btn-primary ms-3" onClick={() => navigate("/admin/notice/insert")}>
+        글등록
+      </button>
       {/* 공지사항 목록 테이블 */}
       <table className="table">
         <thead>
@@ -92,11 +80,7 @@ const NoticeList = () => {
         </thead>
         <tbody>
           {notices.map((notice) => (
-            <tr
-              key={notice.postNo}
-              onClick={() => goDetail(notice.postNo)}
-              style={{ cursor: "pointer" }}
-            >
+            <tr key={notice.postNo} onClick={() => goDetail(notice.postNo)} style={{ cursor: "pointer" }}>
               <td>{notice.postNo}</td>
               <td>{notice.title}</td>
               <td>{notice.writer}</td>
@@ -123,24 +107,16 @@ const NoticeList = () => {
           </li>
 
           {/* 페이지 번호 매기기 */}
-          {Array.from(
-            { length: paging.endPage - paging.startPage + 1 },
-            (_, i) => (
-              <li
-                key={i + paging.startPage}
-                className={`page-item ${
-                  paging.page === i + paging.startPage ? "active" : ""
-                }`}
-              >
-                <button
-                  className="page-link"
-                  onClick={() => changePage(i + paging.startPage)}
-                >
-                  {i + paging.startPage}
-                </button>
-              </li>
-            )
-          )}
+          {Array.from({ length: paging.endPage - paging.startPage + 1 }, (_, i) => (
+            <li
+              key={i + paging.startPage}
+              className={`page-item ${paging.page === i + paging.startPage ? "active" : ""}`}
+            >
+              <button className="page-link" onClick={() => changePage(i + paging.startPage)}>
+                {i + paging.startPage}
+              </button>
+            </li>
+          ))}
 
           {/* 다음 페이지 */}
           <li className={`page-item ${paging.next ? "" : "disabled"}`}>

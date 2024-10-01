@@ -65,9 +65,8 @@ const MemberList = () => {
     console.log(`${loginId} 삭제`);
   };
   return (
-    <div>
+    <div className="container">
       <h1>계정목록({userType})</h1>
-      {/* 필터 버튼 */}
       <div>
         {/* <button onClick={() => setUserType("전체")}>전체</button> */}
         <button onClick={() => setUserType("임대인")}>임대인</button>
@@ -77,11 +76,7 @@ const MemberList = () => {
         <thead>
           <tr>
             <th>
-              <input
-                type="checkbox"
-                checked={selectAll}
-                onChange={handleSelectAll}
-              />
+              <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
             </th>
             <th>아이디</th>
             <th>이름</th>
@@ -105,15 +100,9 @@ const MemberList = () => {
                   </NavLink>
                 </td> */}
                 <td>{member.loginId}</td>
+                <td>{userType === "임대인" ? member.imdaeinName : member.imchainName}</td>
                 <td>
-                  {userType === "임대인"
-                    ? member.imdaeinName
-                    : member.imchainName}
-                </td>
-                <td>
-                  <button onClick={() => handleDelete(member.loginId)}>
-                    삭제
-                  </button>
+                  <button onClick={() => handleDelete(member.loginId)}>삭제</button>
                 </td>
               </tr>
             );
@@ -122,10 +111,7 @@ const MemberList = () => {
       </Table>
       {/* 선택된 멤버 삭제 버튼 */}
       <div>
-        <button
-          onClick={handleDeleteSelected}
-          disabled={selectedMembers.length === 0}
-        >
+        <button onClick={handleDeleteSelected} disabled={selectedMembers.length === 0}>
           선택된 멤버 삭제
         </button>
       </div>

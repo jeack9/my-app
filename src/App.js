@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import QnaList from "./components/QnaList";
@@ -32,25 +27,22 @@ function App() {
               <Sidebar />
               <main className="main-content col">
                 <Routes>
-                  <Route path="/account" element={<MemberList />} />
-                  <Route path="/notice/:postNo" element={<NoticeDetail />} />
-                  <Route
-                    path="/notice/insert/:postNo?"
-                    element={<NoticeInsert />}
-                  />
+                  <Route path="/adnub/account" element={<MemberList />} />
+                  <Route path="/admin/notice/:postNo" element={<NoticeDetail />} />
+                  <Route path="/admin/notice/insert/:postNo?" element={<NoticeInsert />} />
                   {/* <Route path="/notice/insert" element={<NoticeInsert />} /> */}
-                  <Route path="/notices" element={<Notices />} />
-                  <Route path="/qna" element={<QnaList />} />
-                  <Route path="/qna/:postNo" element={<QnaDetail />} />
-                  <Route path="*" element={<Navigate to="/account" />} />
+                  <Route path="/admin/notices" element={<Notices />} />
+                  <Route path="/admin/qna" element={<QnaList />} />
+                  <Route path="/admin/qna/:postNo" element={<QnaDetail />} />
+                  <Route path="*" element={<Navigate to="/admin/account" />} />
                 </Routes>
               </main>
             </div>
           </>
         ) : (
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="*" element={<Navigate to="/login" />} />
+            <Route path="/admin/login" element={<Login />} />
+            <Route path="*" element={<Navigate to="/admin/login" />} />
           </Routes>
         )}
       </div>
