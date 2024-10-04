@@ -110,7 +110,7 @@ const QnaDetail = () => {
           {qna.qnaFiles.map((file) => (
             <img
               key={file.fileId}
-              src={`http://localhost:80/images/${file.filePath}`}
+              src={`http://localhost/images/${file.filePath}`}
               alt="로딩 중"
               className="img-fluid pe-5 pb-3"
             />

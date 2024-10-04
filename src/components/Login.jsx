@@ -74,6 +74,9 @@ const Login = () => {
               <button type="submit" className="btn btn-primary py-3 w-100 mb-4">
                 로그인
               </button>
+              <div className="form-floating mb-3 text-center">
+                <a href="/">Saeipman 이용자</a>
+              </div>
             </form>
           </div>
         </div>
